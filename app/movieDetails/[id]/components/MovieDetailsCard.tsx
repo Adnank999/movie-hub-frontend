@@ -82,9 +82,9 @@ export async function addMovieToCookies(movieDetails: MovieDetails, id: string) 
     
     cookies().set(movieCookieKey, movieData, { path: '/', maxAge: 60 * 60 * 24 }); 
 
-    // console.log(`Movie with ID ${id} saved to cookies`);
+  
   } catch (error) {
-    // console.error("Error saving movie to cookies:", error);
+    
   }
 }
 
