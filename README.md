@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🌐 App URL
 
-## Getting Started
+Frontend: https://movie-hub-frontend-zeta.vercel.app
 
-First, run the development server:
+Backend: https://movie-hub-backend-i9fe.onrender.com
 
-```bash
+📅 How to Run the Project Locally
+
+Clone the Repository
+
+git clone <your-repository-url>
+cd <your-project-directory>
+
+Install Dependencies
+
+npm install
+
+Set up Environment Variables
+
+Create a .env file in the root of your project and add the required environment variables:
+
+Example .env:
+
+Check the .env.example
+
+Run the Development Server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Your app Frontend should now be running locally at http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🔐 JWT Authentication Flow
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Registration
+When a user register his password is hashed by using bycrypt,then based on user given information data stored in database.
 
-## Learn More
+Login
 
-To learn more about Next.js, take a look at the following resources:
+When a user logs in, they provide credentials (email/password).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Server verifies credentials and with predefined jwt secret,jwt signature is used to give a JWT accessToken and a refreshToken.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Access Token Usage
 
-## Deploy on Vercel
+The accessToken is stored securely (usually in memory or HttpOnly cookies).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This token is attached to authorization headers (Authorization: Bearer <token>) for protected API requests.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Refresh Token Flow
+
+accessToken usually has a short expiry (e.g., 15 mins).
+
+When the accessToken expires, the app automatically sends the refreshToken to /auth/refresh-token endpoint.
+
+The server validates the refreshToken and issues a new accessToken.
+
+The new accessToken should be used for futher request.
+
+Logout
+
+On logout, the refreshToken is invalidated on the server and removed from the client.
+
+This setup ensures that the user stays authenticated securely without needing to log in frequently, and limits exposure in case of a token compromise.
+
+🛠️ Technologies Used
+
+Frontend: Next.js, Tailwind CSS, TypeScript, Shadcn UI, React Hook Form, Zod
+
+Backend: Express.js, MongoDB, JWT Authentication
+
+Feel free to open issues or pull requests if you have any suggestions or improvements! 🚀
+
+
